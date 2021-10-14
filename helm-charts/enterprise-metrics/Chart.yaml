@@ -1,0 +1,29 @@
+apiVersion: v2
+appVersion: v1.5.0
+dependencies:
+- alias: memcached
+  condition: memcached.enabled
+  name: memcached
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.5.2
+- alias: memcached-queries
+  condition: memcached-queries.enabled
+  name: memcached
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.5.2
+- alias: memcached-metadata
+  condition: memcached-metadata.enabled
+  name: memcached
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.5.2
+- alias: minio
+  condition: minio.enabled
+  name: minio
+  repository: https://helm.min.io/
+  version: 8.0.9
+description: Grafana Enterprise Metrics
+home: https://grafana.com/products/enterprise/metrics
+icon: https://grafana.com/static/img/menu/metrics-enterprise.svg
+kubeVersion: ^1.10.0-0
+name: enterprise-metrics
+version: 1.5.6

@@ -1,0 +1,1013 @@
+apiVersion: grafana.com/v1alpha1
+kind: Grafana
+metadata:
+  name: grafana-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/enterprise-metrics/values.yaml
+  admin_api:
+    affinity: {}
+    annotations: {}
+    extraArgs: {}
+    extraContainers: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 60
+    tolerations: []
+  alertmanager:
+    affinity: {}
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistentVolume:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: true
+      size: 1Gi
+      subPath: ""
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    statefulSet:
+      enabled: true
+    statefulStrategy:
+      type: RollingUpdate
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 60
+    tolerations: []
+  compactor:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: target
+                operator: In
+                values:
+                - compactor
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    annotations: {}
+    enabled: true
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistentVolume:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: true
+      size: 2Gi
+      subPath: ""
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 60
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 240
+    tolerations: []
+  config:
+    admin_api:
+      leader_election:
+        enabled: true
+        ring:
+          kvstore:
+            store: memberlist
+    admin_client:
+      storage:
+        type: s3
+    alertmanager:
+      data_dir: /data
+      enable_api: true
+      external_url: /alertmanager
+      sharding_enabled: true
+      sharding_ring:
+        kvstore:
+          store: memberlist
+    api:
+      response_compression_enabled: true
+    auth:
+      type: enterprise
+    auth_enabled: true
+    blocks_storage:
+      backend: s3
+      bucket_store:
+        sync_dir: /data/tsdb-sync
+      tsdb:
+        dir: /data/tsdb
+    cluster_name: '{{ .Release.Name }}'
+    compactor:
+      data_dir: /data
+      sharding_enabled: true
+      sharding_ring:
+        kvstore:
+          store: memberlist
+    distributor:
+      pool:
+        health_check_ingesters: true
+      ring:
+        kvstore:
+          store: memberlist
+      shard_by_all_labels: true
+    frontend:
+      log_queries_longer_than: 10s
+    ingester:
+      lifecycler:
+        final_sleep: 0s
+        join_after: 0s
+        num_tokens: 512
+        ring:
+          kvstore:
+            store: memberlist
+          replication_factor: 1
+      max_transfer_retries: 0
+    ingester_client:
+      grpc_client_config:
+        max_recv_msg_size: 104857600
+        max_send_msg_size: 104857600
+    instrumentation:
+      distributor_client:
+        address: dns:///{{ template "enterprise-metrics.fullname" . }}-distributor.{{
+          .Release.Namespace }}.svc:{{ .Values.config.server.grpc_listen_port }}
+      enabled: true
+    license:
+      path: /license/license.jwt
+    limits:
+      enforce_metric_name: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+    memberlist:
+      bind_port: 7946
+    querier:
+      active_query_tracker_dir: /data/enterprise-metrics/querier
+      query_ingesters_within: 12h
+    query_range:
+      align_queries_with_step: true
+      cache_results: true
+      results_cache:
+        cache:
+          memcached:
+            expiration: 1h
+          memcached_client:
+            timeout: 1s
+      split_queries_by_interval: 24h
+    ruler:
+      enable_alertmanager_discovery: false
+      enable_api: true
+      enable_sharding: true
+      ring:
+        kvstore:
+          store: memberlist
+      rule_path: /data
+    runtime_config:
+      file: /var/enterprise-metrics/runtime.yaml
+    server:
+      grpc_listen_port: 9095
+      grpc_server_max_concurrent_streams: 1000
+      grpc_server_max_recv_msg_size: 104857600
+      grpc_server_max_send_msg_size: 104857600
+      http_listen_port: 8080
+    storage:
+      engine: blocks
+    store_gateway:
+      sharding_enabled: true
+      sharding_ring:
+        kvstore:
+          store: memberlist
+  distributor:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: target
+              operator: In
+              values:
+              - distributor
+          topologyKey: kubernetes.io/hostname
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 60
+    tolerations: []
+  externalConfigSecretName: enterprise-metrics-config
+  externalConfigVersion: "0"
+  gateway:
+    affinity: {}
+    annotations: {}
+    extraArgs: {}
+    extraContainers: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 60
+    tolerations: []
+    useDefaultProxyURLs: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: grafana/metrics-enterprise
+    tag: v1.5.0
+  ingester:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: target
+              operator: In
+              values:
+              - ingester
+          topologyKey: kubernetes.io/hostname
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistentVolume:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: true
+      size: 2Gi
+      subPath: ""
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 60
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    statefulSet:
+      enabled: true
+    statefulStrategy:
+      type: RollingUpdate
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 240
+    tolerations: []
+  license:
+    contents: NOTAVALIDLICENSE
+    external: false
+    secretName: enterprise-metrics-license
+  memcached:
+    affinity: {}
+    architecture: high-availability
+    arguments:
+    - -m 8192
+    - -o
+    - modern
+    - -v
+    - -I 1m
+    - -c 4096
+    clusterDomain: cluster.local
+    common:
+      exampleValue: common-chart
+      global: {}
+    enabled: false
+    extraEnv: []
+    global: {}
+    hostAliases: []
+    image:
+      debug: false
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: memcached
+      tag: 1.6.9
+    maxItemMemory: "1048576"
+    metrics:
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: prometheus/memcached-exporter
+        tag: v0.9.0
+      podAnnotations:
+        prometheus.io/port: "9150"
+        prometheus.io/scrape: "true"
+      portName: metrics
+      resources:
+        limits: {}
+        requests: {}
+      service:
+        annotations:
+          prometheus.io/port: '{{ .Values.metrics.service.port }}'
+          prometheus.io/scrape: "true"
+        port: 9150
+        type: ClusterIP
+      serviceMonitor:
+        enabled: false
+    nodeAffinityPreset:
+      key: ""
+      type: ""
+      values: []
+    nodeSelector: {}
+    persistence:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: false
+      size: 8Gi
+    podAffinityPreset: ""
+    podAnnotations: {}
+    podAntiAffinityPreset: soft
+    portName: memcache
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 9830Mi
+      requests:
+        cpu: 500m
+        memory: 9830Mi
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+      readOnlyRootFilesystem: false
+      runAsUser: 1001
+    service:
+      annotations: {}
+      nodePort: ""
+      port: 11211
+      type: ClusterIP
+    tolerations: []
+  memcached-metadata:
+    affinity: {}
+    architecture: high-availability
+    arguments:
+    - -m 512
+    - -o
+    - modern
+    - -v
+    - -I 1m
+    - -c 1024
+    clusterDomain: cluster.local
+    common:
+      exampleValue: common-chart
+      global: {}
+    enabled: false
+    extraEnv: []
+    global: {}
+    hostAliases: []
+    image:
+      debug: false
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: memcached
+      tag: 1.6.9
+    maxItemMemory: "1048576"
+    metrics:
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: prometheus/memcached-exporter
+        tag: v0.9.0
+      podAnnotations:
+        prometheus.io/port: "9150"
+        prometheus.io/scrape: "true"
+      portName: metrics
+      resources:
+        limits: {}
+        requests: {}
+      service:
+        annotations:
+          prometheus.io/port: '{{ .Values.metrics.service.port }}'
+          prometheus.io/scrape: "true"
+        port: 9150
+        type: ClusterIP
+      serviceMonitor:
+        enabled: false
+    nodeAffinityPreset:
+      key: ""
+      type: ""
+      values: []
+    nodeSelector: {}
+    persistence:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: false
+      size: 8Gi
+    podAffinityPreset: ""
+    podAnnotations: {}
+    podAntiAffinityPreset: soft
+    portName: memcache
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 614Mi
+      requests:
+        cpu: 500m
+        memory: 614Mi
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+      readOnlyRootFilesystem: false
+      runAsUser: 1001
+    service:
+      annotations: {}
+      nodePort: ""
+      port: 11211
+      type: ClusterIP
+    tolerations: []
+  memcached-queries:
+    affinity: {}
+    architecture: high-availability
+    arguments:
+    - -m 2048
+    - -o
+    - modern
+    - -v
+    - -I 15m
+    - -c 1024
+    clusterDomain: cluster.local
+    common:
+      exampleValue: common-chart
+      global: {}
+    enabled: false
+    extraEnv: []
+    global: {}
+    hostAliases: []
+    image:
+      debug: false
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: memcached
+      tag: 1.6.9
+    maxItemMemory: "15728640"
+    metrics:
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: prometheus/memcached-exporter
+        tag: v0.9.0
+      podAnnotations:
+        prometheus.io/port: "9150"
+        prometheus.io/scrape: "true"
+      portName: metrics
+      resources:
+        limits: {}
+        requests: {}
+      service:
+        annotations:
+          prometheus.io/port: '{{ .Values.metrics.service.port }}'
+          prometheus.io/scrape: "true"
+        port: 9150
+        type: ClusterIP
+      serviceMonitor:
+        enabled: false
+    nodeAffinityPreset:
+      key: ""
+      type: ""
+      values: []
+    nodeSelector: {}
+    persistence:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: false
+      size: 8Gi
+    podAffinityPreset: ""
+    podAnnotations: {}
+    podAntiAffinityPreset: soft
+    portName: memcache
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 2457Mi
+      requests:
+        cpu: 500m
+        memory: 2457Mi
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+      readOnlyRootFilesystem: false
+      runAsUser: 1001
+    service:
+      annotations: {}
+      nodePort: ""
+      port: 11211
+      type: ClusterIP
+    tolerations: []
+  minio:
+    DeploymentUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+      type: RollingUpdate
+    StatefulSetUpdate:
+      updateStrategy: RollingUpdate
+    accessKey: enterprise-metrics
+    affinity: {}
+    azuregateway:
+      enabled: false
+      replicas: 4
+    bucketRoot: ""
+    buckets:
+    - name: enterprise-metrics-tsdb
+      policy: none
+      purge: false
+    - name: enterprise-metrics-admin
+      policy: none
+      purge: false
+    - name: enterprise-metrics-ruler
+      policy: none
+      purge: false
+    certsPath: /etc/minio/certs/
+    clusterDomain: cluster.local
+    configPathmc: /etc/minio/mc/
+    defaultBucket:
+      enabled: false
+      name: bucket
+      policy: none
+      purge: false
+    drivesPerNode: 1
+    enabled: true
+    environment: {}
+    etcd:
+      clientCert: ""
+      clientCertKey: ""
+      corednsPathPrefix: ""
+      endpoints: []
+      pathPrefix: ""
+    existingSecret: ""
+    extraArgs: []
+    fullnameOverride: ""
+    gcsgateway:
+      enabled: false
+      gcsKeyJson: ""
+      projectId: ""
+      replicas: 4
+    global: {}
+    helmKubectlJqImage:
+      pullPolicy: IfNotPresent
+      repository: bskim45/helm-kubectl-jq
+      tag: 3.1.0
+    image:
+      pullPolicy: IfNotPresent
+      repository: minio/minio
+      tag: RELEASE.2020-12-03T05-49-24Z
+    imagePullSecrets: []
+    ingress:
+      annotations: {}
+      enabled: false
+      hosts:
+      - chart-example.local
+      labels: {}
+      path: /
+      tls: []
+    makeBucketJob:
+      resources:
+        requests:
+          memory: 128Mi
+      securityContext:
+        enabled: false
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+    mcImage:
+      pullPolicy: IfNotPresent
+      repository: minio/mc
+      tag: RELEASE.2020-11-25T23-04-07Z
+    metrics:
+      serviceMonitor:
+        additionalLabels: {}
+        enabled: false
+        relabelConfigs: {}
+    mode: standalone
+    mountPath: /export
+    nameOverride: ""
+    nasgateway:
+      enabled: false
+      replicas: 4
+    networkPolicy:
+      allowExternal: true
+      enabled: false
+    nodeSelector: {}
+    persistence:
+      VolumeName: ""
+      accessMode: ReadWriteOnce
+      enabled: true
+      existingClaim: ""
+      size: 5Gi
+      storageClass: ""
+      subPath: ""
+    podAnnotations: {}
+    podDisruptionBudget:
+      enabled: false
+      maxUnavailable: 1
+    podLabels: {}
+    priorityClassName: ""
+    replicas: 4
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    s3gateway:
+      accessKey: ""
+      enabled: false
+      replicas: 4
+      secretKey: ""
+      serviceEndpoint: ""
+    secretKey: supersecret
+    securityContext:
+      enabled: true
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    service:
+      annotations: {}
+      externalIPs: []
+      nodePort: 32000
+      port: 9000
+      type: ClusterIP
+    serviceAccount:
+      create: true
+    tls:
+      certSecret: ""
+      enabled: false
+      privateKey: private.key
+      publicCrt: public.crt
+    tolerations: []
+    trustedCertsSecret: ""
+    updatePrometheusJob:
+      securityContext:
+        enabled: false
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+    zones: 1
+  overrides_exporter:
+    affinity: {}
+    annotations: {}
+    extraArgs: {}
+    extraContainers: []
+    extraVolumes: []
+    initContainers: []
+    livenessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 60
+    tolerations: []
+  querier:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: target
+                operator: In
+                values:
+                - querier
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 180
+    tolerations: []
+  query_frontend:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: target
+                operator: In
+                values:
+                - query-frontend
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 180
+    tolerations: []
+  rbac:
+    create: true
+    pspEnabled: true
+  ruler:
+    affinity: {}
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistence:
+      subPath: null
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 45
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 180
+    tolerations: []
+  runtimeConfig: {}
+  serviceAccount:
+    annotations: {}
+    create: true
+    name: null
+  store_gateway:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: target
+              operator: In
+              values:
+              - store-gateway
+          topologyKey: kubernetes.io/hostname
+    annotations: {}
+    env: []
+    extraArgs: {}
+    extraContainers: []
+    extraPorts: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    initContainers: []
+    nodeSelector: {}
+    persistentVolume:
+      accessModes:
+      - ReadWriteOnce
+      annotations: {}
+      enabled: true
+      size: 2Gi
+      subPath: ""
+    podAnnotations: {}
+    podDisruptionBudget: {}
+    podLabels: {}
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
+      initialDelaySeconds: 60
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    securityContext: {}
+    service:
+      annotations: {}
+      labels: {}
+    strategy:
+      type: RollingUpdate
+    terminationGracePeriodSeconds: 240
+    tolerations: []
+  tokengenJob:
+    annotations: {}
+    enable: true
+    env: []
+    extraArgs: {}
+    initContainers: []
+  useExternalConfig: false
+  useExternalLicense: false
+  
+  
