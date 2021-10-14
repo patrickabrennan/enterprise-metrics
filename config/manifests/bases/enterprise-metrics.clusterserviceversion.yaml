@@ -1,0 +1,46 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+    categories: Observability
+    containerImage: docker.io/patrickabrennan/enterprise-metrics-controller-bundle:v1.5.6
+    description: An operator to install Grafana enterprise Metrics (GEM) on OpenShift
+    support: Grafana Labs
+  name: enterprise-metrics.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: An operator to install Grafana Enterprise Metrics (GEM) on OpenShift
+  displayName: Grafana Enterprise Metrics (GEM) Operator
+  icon:
+  - base64data: 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
+    mediatype: png
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - Grafana Enterprise Metrics
+  - GEM
+  - Metrics
+  - Observability
+  links:
+  - name: Enterprise Metrics
+    url: https://enterprise-metrics.domain
+  maturity: alpha
+  provider:
+    name: Grafana Labs
+    url: https://grafana.com
+  version: 0.0.0
