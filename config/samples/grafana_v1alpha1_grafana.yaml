@@ -910,7 +910,7 @@ spec:
     tolerations: []
   rbac:
     create: true
-    pspEnabled: true
+    pspEnabled: false
   ruler:
     affinity: {}
     annotations: {}
