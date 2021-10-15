@@ -1204,7 +1204,7 @@ metadata:
             },
             "rbac": {
               "create": true,
-              "pspEnabled": true
+              "pspEnabled": false
             },
             "ruler": {
               "affinity": {},
@@ -1353,6 +1353,67 @@ spec:
     - kind: Grafana
       name: grafanas.grafana.com
       version: v1alpha1
+      displayName: Grafana Enterprise Metrics CR
+      description: Grafana Enterprise Metrics CR is the representation of a Grafana Enterprise Metrics deployment on OpenShift cluster.
+      resources:
+      - kind: Grafana
+        name: ''
+        version: v1alpha1
+      - kind: Secret
+        name: ''
+        version: v1alpha1
+      - kind: Deployment
+        name: ''
+        version: v1
+      - kind: Deployment
+        name: ''
+        version: v1
+      - kind: Job
+        name: ''
+        version: v1
+      specDescriptors:
+      - displayName: License File
+        description: Copy and paste the contents of the license file, normally called license.jwt
+        path: license.contents
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
+      - displayName: Ingester Replication Factor
+        description: The Ingester Replication Factor Must always be a least 3
+        path: config.ingester.lifecycler.ring.replication_factor
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
+      - displayName: Image Repository
+        description: image repository for GEM image, 'grafana/metrics-enterprise' by default
+        path: image.repository
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
+      - displayName: Image Tag
+        description: image version tag for GEM image, 'v1.5.0' by default
+        path: image.tag
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
+      - displayName: Memcached
+        description: Specifies whether Memchached should be turned on, off by default, but strongly recommended
+        path: memcached.enabled
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
+      - displayName: Memcached queries
+        description: Specifies whether Memchached Queries should be turned on, off by default, but strongly recommended
+        path: memcached-queries.enabled
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
+      - displayName: Memcached metadata
+        description: Specifies whether Memchached Metadata should be turned on, off by default, but strongly recommended
+        path: memcached-metadata.enabled
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
   description: An operator to install Grafana Enterprise Metrics (GEM) on OpenShift
   displayName: Grafana Enterprise Metrics (GEM) Operator
   icon:
