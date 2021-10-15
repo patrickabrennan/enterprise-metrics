@@ -1376,7 +1376,7 @@ spec:
         description: Copy and paste the contents of the license file, normally called license.jwt
         path: license.contents
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - 'urn:alm:descriptor:com.tectonic.ui:password'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
       - displayName: Ingester Replication Factor
         description: The Ingester Replication Factor Must always be a least 3
