@@ -31,11 +31,15 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 3,
               "resources": {
+                "limits": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                },
                 "requests": {
                   "cpu": "10m",
-                  "memory": "32Mi"
+                  "memory": "64Mi"
                 }
               },
               "securityContext": {},
@@ -83,11 +87,14 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 3,
               "resources": {
+                "limits": {
+                  "memory": "8Gi"
+                },
                 "requests": {
-                  "cpu": "10m",
-                  "memory": "32Mi"
+                  "cpu": "300m",
+                  "memory": "6Gi"
                 }
               },
               "securityContext": {},
@@ -151,7 +158,7 @@ metadata:
                 ],
                 "annotations": {},
                 "enabled": true,
-                "size": "2Gi",
+                "size": "50Gi",
                 "subPath": ""
               },
               "podAnnotations": {},
@@ -166,9 +173,13 @@ metadata:
               },
               "replicas": 1,
               "resources": {
+                "limits": {
+                  "cpu": "1200m",
+                  "memory": "2Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "512Mi"
+                  "cpu": 1,
+                  "memory": "1Gi"
                 }
               },
               "securityContext": {},
@@ -381,11 +392,14 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 15,
               "resources": {
+                "limits": {
+                  "memory": "4Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "512Mi"
+                  "cpu": 2,
+                  "memory": "2Gi"
                 }
               },
               "securityContext": {},
@@ -425,11 +439,11 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 8,
               "resources": {
                 "requests": {
-                  "cpu": "10m",
-                  "memory": "32Mi"
+                  "cpu": 1,
+                  "memory": "384Mi"
                 }
               },
               "securityContext": {},
@@ -489,7 +503,7 @@ metadata:
                 ],
                 "annotations": {},
                 "enabled": true,
-                "size": "2Gi",
+                "size": "50Gi",
                 "subPath": ""
               },
               "podAnnotations": {},
@@ -502,11 +516,14 @@ metadata:
                 },
                 "initialDelaySeconds": 60
               },
-              "replicas": 1,
+              "replicas": 25,
               "resources": {
+                "limits": {
+                  "memory": "25Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "512Mi"
+                  "cpu": 4,
+                  "memory": "15Gi"
                 }
               },
               "securityContext": {},
@@ -551,7 +568,7 @@ metadata:
                 "exampleValue": "common-chart",
                 "global": {}
               },
-              "enabled": false,
+              "enabled": true,
               "extraEnv": [],
               "global": {},
               "hostAliases": [],
@@ -610,7 +627,7 @@ metadata:
               "podAnnotations": {},
               "podAntiAffinityPreset": "soft",
               "portName": "memcache",
-              "replicaCount": 1,
+              "replicaCount": 32,
               "resources": {
                 "limits": {
                   "memory": "9830Mi"
@@ -650,7 +667,7 @@ metadata:
                 "exampleValue": "common-chart",
                 "global": {}
               },
-              "enabled": false,
+              "enabled": true,
               "extraEnv": [],
               "global": {},
               "hostAliases": [],
@@ -749,7 +766,7 @@ metadata:
                 "exampleValue": "common-chart",
                 "global": {}
               },
-              "enabled": false,
+              "enabled": true,
               "extraEnv": [],
               "global": {},
               "hostAliases": [],
@@ -808,7 +825,7 @@ metadata:
               "podAnnotations": {},
               "podAntiAffinityPreset": "soft",
               "portName": "memcache",
-              "replicaCount": 1,
+              "replicaCount": 10,
               "resources": {
                 "limits": {
                   "memory": "2457Mi"
@@ -875,7 +892,7 @@ metadata:
                 "purge": false
               },
               "drivesPerNode": 1,
-              "enabled": true,
+              "enabled": false,
               "environment": {},
               "etcd": {
                 "clientCert": "",
@@ -1046,6 +1063,9 @@ metadata:
               },
               "replicas": 1,
               "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
                 "requests": {
                   "cpu": "100m",
                   "memory": "128Mi"
@@ -1112,11 +1132,14 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 2,
+              "replicas": 6,
               "resources": {
+                "limits": {
+                  "memory": "24Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "128Mi"
+                  "cpu": 1,
+                  "memory": "12Gi"
                 }
               },
               "securityContext": {},
@@ -1180,11 +1203,14 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 2,
               "resources": {
+                "limits": {
+                  "memory": "6Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "128Mi"
+                  "cpu": 2,
+                  "memory": "2Gi"
                 }
               },
               "securityContext": {},
@@ -1230,11 +1256,14 @@ metadata:
                 },
                 "initialDelaySeconds": 45
               },
-              "replicas": 1,
+              "replicas": 2,
               "resources": {
+                "limits": {
+                  "memory": "16Gi"
+                },
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "128Mi"
+                  "cpu": 1,
+                  "memory": "6Gi"
                 }
               },
               "securityContext": {},
@@ -1294,7 +1323,7 @@ metadata:
                 ],
                 "annotations": {},
                 "enabled": true,
-                "size": "2Gi",
+                "size": "50Gi",
                 "subPath": ""
               },
               "podAnnotations": {},
@@ -1310,8 +1339,8 @@ metadata:
               "replicas": 1,
               "resources": {
                 "requests": {
-                  "cpu": "100m",
-                  "memory": "512Mi"
+                  "cpu": 1,
+                  "memory": "6Gi"
                 }
               },
               "securityContext": {},
@@ -1378,9 +1407,9 @@ spec:
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:password'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
-      - displayName: Ingester Replication Factor
-        description: The Ingester Replication Factor Must always be a least 3
-        path: config.ingester.lifecycler.ring.replication_factor
+      - displayName: Adminapi Replication Factor
+        description: The Admin_api Replication Factor Must always be a least 3
+        path: admin_api.replicas
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:number'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
