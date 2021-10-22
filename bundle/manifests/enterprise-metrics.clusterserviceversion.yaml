@@ -1406,43 +1406,133 @@ spec:
         path: license.contents
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
-      - displayName: Adminapi Replication Factor
-        description: The Admin_api Replication Factor Must always be a least 3
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Admin_api Replication Factor
+        description: The Admin_api Replication Factor Must always be at least 3
         path: admin_api.replicas
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Configuration'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Alertmanager Replication Factor
+        description: The Alertmanager Replication Factor Must always be at least 3
+        path: alertmanager.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Compactor Replication Factor
+        description: The Compactor Replication Factor Must always be at least 1
+        path: compactor.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Distributor Replication Factor
+        description: The Distributor Replication Factor Must always be at least 15
+        path: distributor.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Gateway Replication Factor
+        description: The Distributor Replication Factor Must always be at least 8
+        path: gateway.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Ingester Replication Factor
+        description: The Ingester Replication Factor Must always be at least 25
+        path: ingester.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Memcached Replication Factor
+        description: The Memcached Replication Factor Must always be at least 32
+        path: memcached.replicaCount
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+      - displayName: Memcached-metadata Replication Factor
+        description: The Memcached-metadata Replication Factor Must always be at least 1
+        path: memcached-metadata.replicaCount
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+      - displayName: Memcached-queries Replication Factor
+        description: The Memcached-queries Replication Factor Must always be at least 10
+        path: memcached-queries.replicaCount
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+      - displayName: Minio
+        description: Specifies whether minio should be turned on or off, off by default for large configurations
+        path: minio.enabled
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration'
+      - displayName: Minio Replication Factor
+        description: The Minio Replication Factor Must always be at least 4
+        path: minio.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration'
+      - displayName: Overrides_exporter Replication Factor
+        description: The Overrides_exporter Replication Factor Must always be at least 1
+        path: overrides_exporter.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Querier Replication Factor
+        description: The Querier Replication Factor Must always be at least 6
+        path: querier.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Query_frontend Replication Factor
+        description: The Query_frontend Replication Factor Must always be at least 2
+        path: query_frontend.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Ruler Replication Factor
+        description: The Ruler Replication Factor Must always be at least 2
+        path: ruler.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
+      - displayName: Store_gateway Replication Factor
+        description: The Store_gateway Replication Factor Must always be at least 1
+        path: store_gateway.replicas
+        x-descriptors:
+          - 'urn:alm:descriptor:com.tectonic.ui:number'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
       - displayName: Image Repository
-        description: image repository for GEM image, 'grafana/metrics-enterprise' by default
+        description: Image repository for GEM image, 'grafana/metrics-enterprise' by default
         path: image.repository
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
       - displayName: Image Tag
-        description: image version tag for GEM image, 'v1.5.0' by default
+        description: Image version tag for GEM image, 'v1.5.0' by default
         path: image.tag
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
       - displayName: Memcached
-        description: Specifies whether Memchached should be turned on, off by default, but strongly recommended
+        description: Specifies whether memcached should be turned on or off, on by default
         path: memcached.enabled
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
-      - displayName: Memcached queries
-        description: Specifies whether Memchached Queries should be turned on, off by default, but strongly recommended
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+      - displayName: Memcached-queries
+        description: Specifies whether memcached-queries should be turned on or off, on by default
         path: memcached-queries.enabled
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
-      - displayName: Memcached metadata
-        description: Specifies whether Memchached Metadata should be turned on, off by default, but strongly recommended
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+      - displayName: Memcached-metadata
+        description: Specifies whether Memcached-metadata should be turned on or off, on by default
         path: memcached-metadata.enabled
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcache'
+          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
   description: An operator to install Grafana Enterprise Metrics (GEM) on OpenShift
   displayName: Grafana Enterprise Metrics (GEM) Operator
   icon:
