@@ -21,14 +21,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 3
+    replicas: 1
     resources:
-      limits:
-        cpu: 200m
-        memory: 256Mi
       requests:
         cpu: 10m
-        memory: 64Mi
+        memory: 32Mi
     securityContext: {}
     service:
       annotations: {}
@@ -66,13 +63,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 3
+    replicas: 1
     resources:
-      limits:
-        memory: 8Gi
       requests:
-        cpu: 300m
-        memory: 6Gi
+        cpu: 10m
+        memory: 32Mi
     securityContext: {}
     service:
       annotations: {}
@@ -116,7 +111,7 @@ spec:
       - ReadWriteOnce
       annotations: {}
       enabled: true
-      size: 50Gi
+      size: 2Gi
       subPath: ""
     podAnnotations: {}
     podDisruptionBudget: {}
@@ -128,12 +123,9 @@ spec:
       initialDelaySeconds: 60
     replicas: 1
     resources:
-      limits:
-        cpu: 1200m
-        memory: 2Gi
       requests:
-        cpu: 1
-        memory: 1Gi
+        cpu: 100m
+        memory: 512Mi
     securityContext: {}
     service:
       annotations: {}
@@ -280,13 +272,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 15
+    replicas: 1
     resources:
-      limits:
-        memory: 4Gi
       requests:
-        cpu: 2
-        memory: 2Gi
+        cpu: 100m
+        memory: 512Mi
     securityContext: {}
     service:
       annotations: {}
@@ -317,11 +307,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 8
+    replicas: 1
     resources:
       requests:
-        cpu: 1
-        memory: 384Mi
+        cpu: 10m
+        memory: 32Mi
     securityContext: {}
     service:
       annotations: {}
@@ -363,7 +353,7 @@ spec:
       - ReadWriteOnce
       annotations: {}
       enabled: true
-      size: 50Gi
+      size: 2Gi
       subPath: ""
     podAnnotations: {}
     podDisruptionBudget: {}
@@ -373,13 +363,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 60
-    replicas: 25
+    replicas: 1
     resources:
-      limits:
-        memory: 25Gi
       requests:
-        cpu: 4
-        memory: 15Gi
+        cpu: 100m
+        memory: 512Mi
     securityContext: {}
     service:
       annotations: {}
@@ -413,7 +401,7 @@ spec:
     common:
       exampleValue: common-chart
       global: {}
-    enabled: true
+    enabled: false
     extraEnv: []
     global: {}
     hostAliases: []
@@ -461,7 +449,7 @@ spec:
     podAnnotations: {}
     podAntiAffinityPreset: soft
     portName: memcache
-    replicaCount: 32
+    replicaCount: 1
     resources:
       limits:
         memory: 9830Mi
@@ -493,7 +481,7 @@ spec:
     common:
       exampleValue: common-chart
       global: {}
-    enabled: true
+    enabled: false
     extraEnv: []
     global: {}
     hostAliases: []
@@ -573,7 +561,7 @@ spec:
     common:
       exampleValue: common-chart
       global: {}
-    enabled: true
+    enabled: false
     extraEnv: []
     global: {}
     hostAliases: []
@@ -621,7 +609,7 @@ spec:
     podAnnotations: {}
     podAntiAffinityPreset: soft
     portName: memcache
-    replicaCount: 10
+    replicaCount: 1
     resources:
       limits:
         memory: 2457Mi
@@ -671,7 +659,7 @@ spec:
       policy: none
       purge: false
     drivesPerNode: 1
-    enabled: false
+    enabled: true
     environment: {}
     etcd:
       clientCert: ""
@@ -810,8 +798,6 @@ spec:
       initialDelaySeconds: 45
     replicas: 1
     resources:
-      limits:
-        memory: 256Mi
       requests:
         cpu: 100m
         memory: 128Mi
@@ -858,13 +844,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 6
+    replicas: 2
     resources:
-      limits:
-        memory: 24Gi
       requests:
-        cpu: 1
-        memory: 12Gi
+        cpu: 100m
+        memory: 128Mi
     securityContext: {}
     service:
       annotations: {}
@@ -908,13 +892,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 2
+    replicas: 1
     resources:
-      limits:
-        memory: 6Gi
       requests:
-        cpu: 2
-        memory: 2Gi
+        cpu: 100m
+        memory: 128Mi
     securityContext: {}
     service:
       annotations: {}
@@ -950,13 +932,11 @@ spec:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
-    replicas: 2
+    replicas: 1
     resources:
-      limits:
-        memory: 16Gi
       requests:
-        cpu: 1
-        memory: 6Gi 
+        cpu: 100m
+        memory: 128Mi
     securityContext: {}
     service:
       annotations: {}
@@ -998,7 +978,7 @@ spec:
       - ReadWriteOnce
       annotations: {}
       enabled: true
-      size: 50Gi
+      size: 2Gi
       subPath: ""
     podAnnotations: {}
     podDisruptionBudget: {}
@@ -1010,10 +990,9 @@ spec:
       initialDelaySeconds: 60
     replicas: 1
     resources:
-    resources:
       requests:
-        cpu: 1
-        memory: 6Gi  
+        cpu: 100m
+        memory: 512Mi
     securityContext: {}
     service:
       annotations: {}
