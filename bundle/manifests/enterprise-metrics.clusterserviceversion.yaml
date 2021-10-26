@@ -206,6 +206,12 @@ metadata:
               },
               "admin_client": {
                 "storage": {
+                  "s3": {
+                    "access_key_id": null,
+                    "bucket_name": null,
+                    "endpoint": null,
+                    "secret_access_key": null
+                  },
                   "type": "s3"
                 }
               },
@@ -218,6 +224,16 @@ metadata:
                   "kvstore": {
                     "store": "memberlist"
                   }
+                },
+                "storage": {
+                  "s3": {
+                    "access_key_id": null,
+                    "bucketnames": null,
+                    "endpoint": null,
+                    "region": null,
+                    "secret_access_key": null
+                  },
+                  "type": "s3"
                 }
               },
               "api": {
@@ -231,6 +247,12 @@ metadata:
                 "backend": "s3",
                 "bucket_store": {
                   "sync_dir": "/data/tsdb-sync"
+                },
+                "s3": {
+                  "access_key_id": null,
+                  "bucket_name": null,
+                  "endpoint": null,
+                  "secret_access_key": null
                 },
                 "tsdb": {
                   "dir": "/data/tsdb"
@@ -325,7 +347,17 @@ metadata:
                     "store": "memberlist"
                   }
                 },
-                "rule_path": "/data"
+                "rule_path": "/data",
+                "storage": {
+                  "s3": {
+                    "access_key_id": null,
+                    "bucketnames": null,
+                    "endpoint": null,
+                    "region": null,
+                    "secret_access_key": null
+                  },
+                  "type": "s3"
+                }
               },
               "runtime_config": {
                 "file": "/var/enterprise-metrics/runtime.yaml"
@@ -1390,11 +1422,17 @@ spec:
         version: v1alpha1
       - kind: Secret
         name: ''
-        version: v1alpha1
+        version: v1
       - kind: Deployment
         name: ''
         version: v1
-      - kind: Deployment
+      - kind: StatefulSet
+        name: ''
+        version: v1
+      - kind: ReplicaSet
+        name: ''
+        version: v1
+      - kind: Pod
         name: ''
         version: v1
       - kind: Job
@@ -1469,6 +1507,7 @@ spec:
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
       - displayName: The admin_client S3 endpoint
         description: Specifies the Admin_client S3 endpoint
+        path: config.admin_client.storage.s3.endpoint
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
@@ -1515,26 +1554,26 @@ spec:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
       - displayName: The blocks_storage S3 bucket_name
-        description: Specifies the alertmanager S3 bucket_name
-        path: config.bucket_name.storage.s3.bucket_name
+        description: Specifies the blocks_storage S3 bucket_name
+        path: config.blocks_storage.s3.bucket_name
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
       - displayName: The blocks_storage S3 endpoint
-        description: Specifies the alertmanager S3 endpoint
-        path: config.bucket_name.storage.s3.endpoint
+        description: Specifies the blocks_storage S3 endpoint
+        path: config.blocks_storage.s3.endpoint
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:text'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
       - displayName: The blocks_storage S3 access_key_id
-        description: Specifies the alertmanager S3 access_key_id
-        path: config.bucket_name.storage.s3.access_key_id
+        description: Specifies the blocks_storage S3 access_key_id
+        path: config.blocks_storage.s3.access_key_id
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:password'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
       - displayName: The blocks_storage S3 secret_access_key
-        description: Specifies the alertmanager S3 secret_access_key
-        path: config.bucket_name.storage.s3.secret_access_key
+        description: Specifies the blocks_storage S3 secret_access_key
+        path: config.blocks_storage.s3.secret_access_key
         x-descriptors:
           - 'urn:alm:descriptor:com.tectonic.ui:password'
           - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'

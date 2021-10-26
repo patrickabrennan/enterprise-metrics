@@ -1,0 +1,67 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  annotations:
+    machine.openshift.io/memoryMb: "32768"
+    machine.openshift.io/vCPU: "8"
+  creationTimestamp: "2021-10-25T16:00:51Z"
+  generation: 1
+  labels:
+    machine.openshift.io/cluster-api-cluster: ocp-test-j7fv7
+  name: ocp-test-j7fv7-worker-c
+  namespace: openshift-machine-api
+  resourceVersion: "20034"
+  uid: cc860106-046f-4439-873e-435c127fa7d6
+spec:
+  replicas: 40
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ocp-test-j7fv7
+      machine.openshift.io/cluster-api-machineset: ocp-test-j7fv7-worker-c
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ocp-test-j7fv7
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: ocp-test-j7fv7-worker-c
+    spec:
+      metadata: {}
+      providerSpec:
+        value:
+          apiVersion: gcpprovider.openshift.io/v1beta1
+          canIPForward: false
+          credentialsSecret:
+            name: gcp-cloud-credentials
+          deletionProtection: false
+          disks:
+          - autoDelete: true
+            boot: true
+            image: projects/rhcos-cloud/global/images/rhcos-48-84-202106301921-0-gcp-x86-64
+            labels: null
+            sizeGb: 128
+            type: pd-ssd
+          kind: GCPMachineProviderSpec
+          machineType: e2-standard-8
+          metadata:
+            creationTimestamp: null
+          networkInterfaces:
+          - network: ocp-test-j7fv7-network
+            subnetwork: ocp-test-j7fv7-worker-subnet
+          projectID: solutions-engineering-248511
+          region: us-central1
+          serviceAccounts:
+          - email: ocp-test-j7fv7-w@solutions-engineering-248511.iam.gserviceaccount.com
+            scopes:
+            - https://www.googleapis.com/auth/cloud-platform
+          tags:
+          - ocp-test-j7fv7-worker
+          userDataSecret:
+            name: worker-user-data
+          zone: us-central1-c
+status:
+  availableReplicas: 3
+  fullyLabeledReplicas: 3
+  observedGeneration: 1
+  readyReplicas: 3
+  replicas: 3

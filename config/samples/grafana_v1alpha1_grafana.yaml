@@ -152,6 +152,11 @@ spec:
     admin_client:
       storage:
         type: s3
+        s3:
+          bucket_name: 
+          endpoint: 
+          access_key_id: 
+          secret_access_key: 
     alertmanager:
       data_dir: /data
       enable_api: true
@@ -160,6 +165,14 @@ spec:
       sharding_ring:
         kvstore:
           store: memberlist
+      storage:
+        type: s3
+        s3:
+          bucketnames: 
+          endpoint: 
+          access_key_id: 
+          secret_access_key: 
+          region: 
     api:
       response_compression_enabled: true
     auth:
@@ -171,6 +184,11 @@ spec:
         sync_dir: /data/tsdb-sync
       tsdb:
         dir: /data/tsdb
+      s3:
+        bucket_name: 
+        endpoint: 
+        access_key_id: 
+        secret_access_key: 
     cluster_name: '{{ .Release.Name }}'
     compactor:
       data_dir: /data
@@ -235,6 +253,14 @@ spec:
         kvstore:
           store: memberlist
       rule_path: /data
+      storage:
+        type: s3
+        s3:
+          bucketnames: 
+          endpoint: 
+          access_key_id: 
+          secret_access_key: 
+          region: 
     runtime_config:
       file: /var/enterprise-metrics/runtime.yaml
     server:
