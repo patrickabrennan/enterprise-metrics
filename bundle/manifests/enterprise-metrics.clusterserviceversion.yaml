@@ -1772,6 +1772,10 @@ spec:
           verbs:
           - delete
           - create
+          - get
+          - watch
+          - list
+          - patch
         - apiGroups:
           - authentication.k8s.io
           resources:
@@ -1879,13 +1883,13 @@ spec:
         serviceAccountName: enterprise-metrics-controller-manager
     strategy: deployment
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
-  - supported: false
+  - supported: true
     type: SingleNamespace
   - supported: false
     type: MultiNamespace
-  - supported: true
+  - supported: false
     type: AllNamespaces
   keywords:
   - Grafana Enterprise Metrics

@@ -97,5 +97,9 @@ rules:
   verbs:
   - delete
   - create
+  - get
+  - watch
+  - list
+  - patch
 
 #+kubebuilder:scaffold:rules
