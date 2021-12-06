@@ -224,16 +224,16 @@ metadata:
                   "kvstore": {
                     "store": "memberlist"
                   }
-                },
-                "storage": {
-                  "s3": {
-                    "access_key_id": null,
-                    "bucketnames": null,
-                    "endpoint": null,
-                    "region": null,
-                    "secret_access_key": null
-                  },
-                  "type": "s3"
+                }
+              },
+              "alertmanager_storage": {
+                "backend": "s3",
+                "s3": {
+                  "access_key_id": null,
+                  "bucket_name": null,
+                  "endpoint": null,
+                  "region": null,
+                  "secret_access_key": null
                 }
               },
               "api": {
@@ -671,9 +671,9 @@ metadata:
               },
               "securityContext": {
                 "enabled": true,
-                "fsGroup": 1001,
+                "fsGroup": 1000660000,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1001
+                "runAsUser": 1000660000
               },
               "service": {
                 "annotations": {},
@@ -770,9 +770,9 @@ metadata:
               },
               "securityContext": {
                 "enabled": true,
-                "fsGroup": 1001,
+                "fsGroup": 1000660000,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1001
+                "runAsUser": 1000660000
               },
               "service": {
                 "annotations": {},
@@ -869,9 +869,9 @@ metadata:
               },
               "securityContext": {
                 "enabled": true,
-                "fsGroup": 1001,
+                "fsGroup": 1000660000,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1001
+                "runAsUser": 1000660000
               },
               "service": {
                 "annotations": {},
@@ -1411,274 +1411,286 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - kind: Grafana
-      name: grafanas.grafana.com
-      version: v1alpha1
+    - description: Grafana Enterprise Metrics CR is the representation of a Grafana
+        Enterprise Metrics deployment on OpenShift cluster.
       displayName: Grafana Enterprise Metrics CR
-      description: Grafana Enterprise Metrics CR is the representation of a Grafana Enterprise Metrics deployment on OpenShift cluster.
+      kind: Grafana
+      name: grafanas.grafana.com
       resources:
       - kind: Grafana
-        name: ''
+        name: ""
         version: v1alpha1
       - kind: Secret
-        name: ''
+        name: ""
         version: v1
       - kind: Deployment
-        name: ''
+        name: ""
         version: v1
       - kind: StatefulSet
-        name: ''
+        name: ""
         version: v1
       - kind: ReplicaSet
-        name: ''
+        name: ""
         version: v1
       - kind: Pod
-        name: ''
+        name: ""
         version: v1
       - kind: Job
-        name: ''
+        name: ""
         version: v1
       specDescriptors:
-      - displayName: License File
-        description: Copy and paste the contents of the license file, normally called license.jwt
+      - description: Copy and paste the contents of the license file, normally called
+          license.jwt
+        displayName: License File
         path: license.contents
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Admin_api Replication Factor
-        description: The Admin_api Replication Factor Must always be at least 3
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Admin_api Replication Factor Must always be at least 3
+        displayName: Admin_api Replication Factor
         path: admin_api.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Alertmanager Replication Factor
-        description: The Alertmanager Replication Factor Must always be at least 3
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Alertmanager Replication Factor Must always be at least 3
+        displayName: Alertmanager Replication Factor
         path: alertmanager.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Compactor Replication Factor
-        description: The Compactor Replication Factor Must always be at least 1
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Compactor Replication Factor Must always be at least 1
+        displayName: Compactor Replication Factor
         path: compactor.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Distributor Replication Factor
-        description: The Distributor Replication Factor Must always be at least 15
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Distributor Replication Factor Must always be at least 15
+        displayName: Distributor Replication Factor
         path: distributor.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Gateway Replication Factor
-        description: The Distributor Replication Factor Must always be at least 8
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Distributor Replication Factor Must always be at least 8
+        displayName: Gateway Replication Factor
         path: gateway.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Ingester Replication Factor
-        description: The Ingester Replication Factor Must always be at least 25
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Ingester Replication Factor Must always be at least 25
+        displayName: Ingester Replication Factor
         path: ingester.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Memcached Replication Factor
-        description: The Memcached Replication Factor Must always be at least 32
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Memcached Replication Factor Must always be at least 32
+        displayName: Memcached Replication Factor
         path: memcached.replicaCount
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
-      - displayName: Memcached-metadata Replication Factor
-        description: The Memcached-metadata Replication Factor Must always be at least 1
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      - description: The Memcached-metadata Replication Factor Must always be at least
+          1
+        displayName: Memcached-metadata Replication Factor
         path: memcached-metadata.replicaCount
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
-      - displayName: Memcached-queries Replication Factor
-        description: The Memcached-queries Replication Factor Must always be at least 10
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      - description: The Memcached-queries Replication Factor Must always be at least
+          10
+        displayName: Memcached-queries Replication Factor
         path: memcached-queries.replicaCount
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
-      - displayName: The admin_client S3 bucket_name
-        description: Specifies the Admin_client S3 bucket_name
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      - description: Specifies the Admin_client S3 bucket_name
+        displayName: The admin_client S3 bucket_name
         path: config.admin_client.storage.s3.bucket_name
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
-      - displayName: The admin_client S3 endpoint
-        description: Specifies the Admin_client S3 endpoint
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration
+      - description: Specifies the Admin_client S3 endpoint
+        displayName: The admin_client S3 endpoint
         path: config.admin_client.storage.s3.endpoint
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
-      - displayName: The admin_client S3 access_key_id
-        description: Specifies the Admin_client S3 access_key_id
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration
+      - description: Specifies the Admin_client S3 access_key_id
+        displayName: The admin_client S3 access_key_id
         path: config.admin_client.storage.s3.access_key_id
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
-      - displayName: The admin_client S3 secret_access_key
-        description: Specifies the Admin_client S3 secret_access_key
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration
+      - description: Specifies the Admin_client S3 secret_access_key
+        displayName: The admin_client S3 secret_access_key
         path: config.admin_client.storage.s3.secret_access_key
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration'
-      - displayName: The alertmanager S3 bucketnames
-        description: Specifies the alertmanager S3 bucketnames
-        path: config.alertmanager.storage.s3.bucketnames
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Admin_client Configuration
+      - description: Specifies the alertmanager S3 bucket_name
+        displayName: The alertmanager S3 bucket_name
+        path: config.alertmanager_storage.s3.bucket_name
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
-      - displayName: The alertmanager S3 endpoint
-        description: Specifies the alertmanager S3 endpoint
-        path: config.alertmanager.storage.s3.endpoint
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration
+      - description: Specifies the alertmanager S3 endpoint
+        displayName: The alertmanager S3 endpoint
+        path: config.alertmanager_storage.s3.endpoint
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
-      - displayName: The alertmanager S3 access_key_id
-        description: Specifies the alertmanager S3 access_key_id
-        path: config.alertmanager.storage.s3.access_key_id
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration
+      - description: Specifies the alertmanager S3 access_key_id
+        displayName: The alertmanager S3 access_key_id
+        path: config.alertmanager_storage.s3.access_key_id
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
-      - displayName: The alertmanager S3 secret_access_key
-        description: Specifies the alertmanager S3 secret_access_key
-        path: config.alertmanager.storage.s3.secret_access_key
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration
+      - description: Specifies the alertmanager S3 secret_access_key
+        displayName: The alertmanager S3 secret_access_key
+        path: config.alertmanager_storage.s3.secret_access_key
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
-      - displayName: The alertmanager S3 region
-        description: Specifies the alertmanager S3 region
-        path: config.alertmanager.storage.s3.region
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration
+      - description: Specifies the alertmanager S3 region
+        displayName: The alertmanager S3 region
+        path: config.alertmanager_storage.s3.region
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration'
-      - displayName: The blocks_storage S3 bucket_name
-        description: Specifies the blocks_storage S3 bucket_name
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Alertmanager Configuration
+      - description: Specifies the blocks_storage S3 bucket_name
+        displayName: The blocks_storage S3 bucket_name
         path: config.blocks_storage.s3.bucket_name
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
-      - displayName: The blocks_storage S3 endpoint
-        description: Specifies the blocks_storage S3 endpoint
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration
+      - description: Specifies the blocks_storage S3 endpoint
+        displayName: The blocks_storage S3 endpoint
         path: config.blocks_storage.s3.endpoint
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
-      - displayName: The blocks_storage S3 access_key_id
-        description: Specifies the blocks_storage S3 access_key_id
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration
+      - description: Specifies the blocks_storage S3 access_key_id
+        displayName: The blocks_storage S3 access_key_id
         path: config.blocks_storage.s3.access_key_id
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
-      - displayName: The blocks_storage S3 secret_access_key
-        description: Specifies the blocks_storage S3 secret_access_key
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration
+      - description: Specifies the blocks_storage S3 secret_access_key
+        displayName: The blocks_storage S3 secret_access_key
         path: config.blocks_storage.s3.secret_access_key
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration'
-      - displayName: The ruler S3 bucketnames
-        description: Specifies the ruler S3 bucketnames
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Blocks_storage Configuration
+      - description: Specifies the ruler S3 bucketnames
+        displayName: The ruler S3 bucketnames
         path: config.ruler.storage.s3.bucketnames
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration'
-      - displayName: The ruler S3 endpoint
-        description: Specifies the ruler S3 endpoint
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration
+      - description: Specifies the ruler S3 endpoint
+        displayName: The ruler S3 endpoint
         path: config.ruler.storage.s3.endpoint
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration'
-      - displayName: The ruler S3 access_key_id
-        description: Specifies the ruler S3 access_key_id
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration
+      - description: Specifies the ruler S3 access_key_id
+        displayName: The ruler S3 access_key_id
         path: config.ruler.storage.s3.access_key_id
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration'
-      - displayName: The ruler S3 secret_access_key
-        description: Specifies the ruler S3 secret_access_key
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration
+      - description: Specifies the ruler S3 secret_access_key
+        displayName: The ruler S3 secret_access_key
         path: config.ruler.storage.s3.secret_access_key
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration'
-      - displayName: The ruler S3 region
-        description: Specifies the ruler S3 region
+        - urn:alm:descriptor:com.tectonic.ui:password
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration
+      - description: Specifies the ruler S3 region
+        displayName: The ruler S3 region
         path: config.ruler.storage.s3.region
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration'
-      - displayName: Minio
-        description: Turn off is setting S3 endpoints. Set to off by default for large configurations as S3 should be used instead
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:S3 Ruler Configuration
+      - description: Turn off is setting S3 endpoints. Set to off by default for large
+          configurations as S3 should be used instead
+        displayName: Minio
         path: minio.enabled
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration'
-      - displayName: Minio Replication Factor
-        description: The Minio Replication Factor Must always be at least 4
+        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration
+      - description: The Minio Replication Factor Must always be at least 4
+        displayName: Minio Replication Factor
         path: minio.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration'
-      - displayName: Overrides_exporter Replication Factor
-        description: The Overrides_exporter Replication Factor Must always be at least 1
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Minio Configuration
+      - description: The Overrides_exporter Replication Factor Must always be at least
+          1
+        displayName: Overrides_exporter Replication Factor
         path: overrides_exporter.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Querier Replication Factor
-        description: The Querier Replication Factor Must always be at least 6
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Querier Replication Factor Must always be at least 6
+        displayName: Querier Replication Factor
         path: querier.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Query_frontend Replication Factor
-        description: The Query_frontend Replication Factor Must always be at least 2
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Query_frontend Replication Factor Must always be at least
+          2
+        displayName: Query_frontend Replication Factor
         path: query_frontend.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Ruler Replication Factor
-        description: The Ruler Replication Factor Must always be at least 2
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Ruler Replication Factor Must always be at least 2
+        displayName: Ruler Replication Factor
         path: ruler.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Store_gateway Replication Factor
-        description: The Store_gateway Replication Factor Must always be at least 1
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: The Store_gateway Replication Factor Must always be at least
+          1
+        displayName: Store_gateway Replication Factor
         path: store_gateway.replicas
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:number'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration'
-      - displayName: Image Repository
-        description: Image repository for GEM image, 'grafana/metrics-enterprise' by default
+        - urn:alm:descriptor:com.tectonic.ui:number
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:GEM Configuration
+      - description: Image repository for GEM image, 'grafana/metrics-enterprise'
+          by default
+        displayName: Image Repository
         path: image.repository
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
-      - displayName: Image Tag
-        description: Image version tag for GEM image, 'v1.5.0' by default
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image
+      - description: Image version tag for GEM image, 'v1.5.0' by default
+        displayName: Image Tag
         path: image.tag
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image'
-      - displayName: Memcached
-        description: Specifies whether memcached should be turned on or off, on by default
+        - urn:alm:descriptor:com.tectonic.ui:text
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Image
+      - description: Specifies whether memcached should be turned on or off, on by
+          default
+        displayName: Memcached
         path: memcached.enabled
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
-      - displayName: Memcached-queries
-        description: Specifies whether memcached-queries should be turned on or off, on by default
+        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      - description: Specifies whether memcached-queries should be turned on or off,
+          on by default
+        displayName: Memcached-queries
         path: memcached-queries.enabled
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
-      - displayName: Memcached-metadata
-        description: Specifies whether Memcached-metadata should be turned on or off, on by default
+        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      - description: Specifies whether Memcached-metadata should be turned on or off,
+          on by default
+        displayName: Memcached-metadata
         path: memcached-metadata.enabled
         x-descriptors:
-          - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration'
+        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        - urn:alm:descriptor:com.tectonic.ui:fieldGroup:Memcached Configuration
+      version: v1alpha1
   description: An operator to install Grafana Enterprise Metrics (GEM) on OpenShift
   displayName: Grafana Enterprise Metrics (GEM) Operator
   icon:

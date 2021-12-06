@@ -165,14 +165,14 @@ spec:
       sharding_ring:
         kvstore:
           store: memberlist
-      storage:
-        type: s3
-        s3:
-          bucketnames: 
-          endpoint: 
-          access_key_id: 
-          secret_access_key: 
-          region: 
+    alertmanager_storage:
+      backend: s3
+      s3:
+        bucket_name: 
+        endpoint: 
+        access_key_id: 
+        secret_access_key: 
+        region: 
     api:
       response_compression_enabled: true
     auth:
