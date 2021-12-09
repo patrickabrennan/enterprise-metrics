@@ -1,0 +1,80 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: enterprise-metrics-role
+rules:
+##
+## Rules for grafana.com/v1alpha1, Kind: Grafana
+##
+- apiGroups:
+  - grafana.com
+  resources:
+  - grafanas
+  - grafanas/status
+  - grafanas/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "persistentvolumeclaims"
+  - "secrets"
+  - "serviceaccounts"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+  - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "deployments"
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "clusterrolebindings"
+  - "clusterroles"
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - anyuid
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use
+- apiGroups:
+  - security.openshift.io
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - '*'
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - delete
+  - create
+  - get
+  - watch
+  - list
+  - patch
+
+#+kubebuilder:scaffold:rules

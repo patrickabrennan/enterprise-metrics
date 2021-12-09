@@ -495,7 +495,7 @@ spec:
         cpu: 500m
         memory: 9830Mi
     securityContext:
-      enabled: false
+      enabled: true
       fsGroup: 1001
       readOnlyRootFilesystem: false
       runAsUser: 1001
@@ -575,7 +575,7 @@ spec:
         cpu: 500m
         memory: 614Mi
     securityContext:
-      enabled: false
+      enabled: true
       fsGroup: 1001
       readOnlyRootFilesystem: false
       runAsUser: 1001
@@ -655,7 +655,7 @@ spec:
         cpu: 500m
         memory: 2457Mi
     securityContext:
-      enabled: false
+      enabled: true
       fsGroup: 1001
       readOnlyRootFilesystem: false
       runAsUser: 1001
@@ -797,7 +797,7 @@ spec:
       port: 9000
       type: ClusterIP
     serviceAccount:
-      create: false
+      create: true
     tls:
       certSecret: ""
       enabled: false
@@ -997,7 +997,7 @@ spec:
   runtimeConfig: {}
   serviceAccount:
     annotations: {}
-    create: false
+    create: true
     name: null
   store_gateway:
     affinity:

@@ -670,10 +670,10 @@ metadata:
                 }
               },
               "securityContext": {
-                "enabled": true,
-                "fsGroup": 1000660000,
+                "enabled": false,
+                "fsGroup": 1001,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1000660000
+                "runAsUser": 1001
               },
               "service": {
                 "annotations": {},
@@ -769,10 +769,10 @@ metadata:
                 }
               },
               "securityContext": {
-                "enabled": true,
-                "fsGroup": 1000660000,
+                "enabled": false,
+                "fsGroup": 1001,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1000660000
+                "runAsUser": 1001
               },
               "service": {
                 "annotations": {},
@@ -868,10 +868,10 @@ metadata:
                 }
               },
               "securityContext": {
-                "enabled": true,
-                "fsGroup": 1000660000,
+                "enabled": false,
+                "fsGroup": 1001,
                 "readOnlyRootFilesystem": false,
-                "runAsUser": 1000660000
+                "runAsUser": 1001
               },
               "service": {
                 "annotations": {},
@@ -1046,7 +1046,7 @@ metadata:
                 "type": "ClusterIP"
               },
               "serviceAccount": {
-                "create": true
+                "create": false
               },
               "tls": {
                 "certSecret": "",
@@ -1316,7 +1316,7 @@ metadata:
             "runtimeConfig": {},
             "serviceAccount": {
               "annotations": {},
-              "create": true,
+              "create": false,
               "name": null
             },
             "store_gateway": {
@@ -1860,6 +1860,78 @@ spec:
               serviceAccountName: enterprise-metrics-controller-manager
               terminationGracePeriodSeconds: 10
       permissions:
+      - rules:
+        - apiGroups:
+          - grafana.com
+          resources:
+          - grafanas
+          - grafanas/status
+          - grafanas/finalizers
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - persistentvolumeclaims
+          - secrets
+          - serviceaccounts
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          - roles
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - clusterrolebindings
+          - clusterroles
+          verbs:
+          - '*'
+        - apiGroups:
+          - security.openshift.io
+          resourceNames:
+          - anyuid
+          resources:
+          - securitycontextconstraints
+          verbs:
+          - use
+        - apiGroups:
+          - security.openshift.io
+          resources:
+          - securitycontextconstraints
+          verbs:
+          - '*'
+        - apiGroups:
+          - batch
+          resources:
+          - jobs
+          verbs:
+          - delete
+          - create
+          - get
+          - watch
+          - list
+          - patch
+        serviceAccountName: enterprise-metrics
       - rules:
         - apiGroups:
           - ""
