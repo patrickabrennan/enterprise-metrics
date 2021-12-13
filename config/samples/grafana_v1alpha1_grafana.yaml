@@ -1054,6 +1054,7 @@ spec:
     env: []
     extraArgs: {}
     initContainers: []
+    serviceAccountName: enterprise-metrics
   useExternalConfig: false
   useExternalLicense: false
   
