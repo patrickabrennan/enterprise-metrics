@@ -1261,7 +1261,7 @@ metadata:
               "tolerations": []
             },
             "rbac": {
-              "create": true,
+              "create": false,
               "pspEnabled": false
             },
             "ruler": {
@@ -1317,7 +1317,7 @@ metadata:
             "serviceAccount": {
               "annotations": {},
               "create": false,
-              "name": null
+              "name": "enterprise-metrics"
             },
             "store_gateway": {
               "affinity": {
@@ -1392,7 +1392,9 @@ metadata:
               "env": [],
               "extraArgs": {},
               "initContainers": [],
-              "serviceAccountName": "enterprise-metrics"
+              "serviceAccount": {
+                "name": "enterprise-metrics"
+              }
             },
             "useExternalConfig": false,
             "useExternalLicense": false

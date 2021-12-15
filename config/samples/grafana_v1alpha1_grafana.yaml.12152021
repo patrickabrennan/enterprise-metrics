@@ -953,7 +953,7 @@ spec:
     terminationGracePeriodSeconds: 180
     tolerations: []
   rbac:
-    create: false
+    create: true
     pspEnabled: false
   ruler:
     affinity: {}
@@ -998,7 +998,7 @@ spec:
   serviceAccount:
     annotations: {}
     create: false
-    name: enterprise-metrics
+    name: null
   store_gateway:
     affinity:
       podAntiAffinity:
@@ -1054,8 +1054,7 @@ spec:
     env: []
     extraArgs: {}
     initContainers: []
-    serviceAccount:
-      name: enterprise-metrics
+    serviceAccountName: enterprise-metrics
   useExternalConfig: false
   useExternalLicense: false
   
